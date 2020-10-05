@@ -1,20 +1,21 @@
-#!/usr/bin/python2
+#!/usr/bin/python3
 import sys
 import subprocess
-from urllib import urlencode
+from urllib.parse import urlencode
 
 def print_help():
     global fallback_engine
-    print("Usage:\n$ surfpy [engine tag] [your search terms]")
-    print("$ surfpy -l (or --list) lists your tags and descriptions and exits.")
-    print("$ surfpy -h (or --help) prints this help and exits.")
-    print("$ surfpy --print-only will print the string to stdout without passing it to the browser.")
-    print("$ surfpy -b [browser] uses [browser] instead of the browser defined in the options.")
-    print("$ surfpy --dmenu launches dmenu for interactive tag selection.")
-    print("""If the engine tag is not defined in the options all
-the arguments will be passed to a fallback search engine
-defined in the options.""")
-    print("Current fallback engine:\n%s\t\t%s" % (fallback_engine, available_engines[fallback_engine][2]))
+    print("\n".join(
+            ["Usage:\n$ surfpy [engine tag] [your search terms]",
+             "$ surfpy -l (or --list) lists your tags and descriptions and exits.",
+             "$ surfpy -h (or --help) prints this help and exits.",
+             "$ surfpy --print-only will print the string to stdout without passing it to the browser.",
+             "$ surfpy -b [browser] uses [browser] instead of the browser defined in the options.",
+             "$ surfpy --dmenu launches dmenu for interactive tag selection.",
+             "\nIf the engine tag is not defined in the options all",
+             "the arguments will be passed to a fallback search engine",
+             "defined in the options."]))
+    print("\nCurrent fallback engine:\n{}\t\t{}".format(fallback_engine, available_engines[fallback_engine][2]))
 
 def list_engines():
     for i in available_engines:
@@ -25,23 +26,21 @@ def list_engines():
 
 ##### Options: #####
 
-browser = "firefox" #insert the command for your preferred browser here.
+browser = "surf" #insert the command for your preferred browser here.
 fallback_engine = "ddg" #set the fallback engine tag you want to use.
 dmenu_arguments = "" # set additional arguments for dmenu, like font selection or color options.
 
 # Search engines:
-## Insert your custom search engines here following the syntax of the other ones. Don't forget the commas.
+# Insert your custom search engines here following the syntax of the other ones. Don't forget the commas.
 # "engine-tag":["engine url with trailing '?' ", " search prefix ", "name or short description"],
 
 available_engines = {
 "ddg":["https://www.duckduckgo.com/?", "q", "DuckDuckGo"],
 "yt":["https://www.youtube.com/results?","search_query", "YouTube"],
 "awiki":["https://wiki.archlinux.org/index.php?", "search", "Arch Wiki"],
-"python2":["https://docs.python.org/2/search.html?", "q", "Python 2.7 documentation"],
-"imgur":["https://imgur.com/search?", "q", "imgur"],
-"wallhaven":["http://alpha.wallhaven.cc/search?", "q", "Wallhaven"],
-"dA":["http://www.deviantart.com/browse/all/?", "section=&global=1&q", "deviantART"],
-"img":["https://duckduckgo.com/?ia=images&iax=1&", "q", "DuckDuckGo image search"],
+"apkg":["https://archlinux.org/packages", "search", "Arch Packages"],
+"aur":["https://aur.archlinux.org/packages", "search", "AUR"],
+"git":["https://github.com/login", "login", "GitHub"],
 }
 
 ##### End of options. #####
@@ -72,7 +71,7 @@ if "--dmenu" in sys.argv:
     dmenu_tags = ''
     for tag in available_engines:
         dmenu_tags += tag + '\n'
-    dmenu_command = "echo \"%s\" | dmenu -p 'Surfpy:' %s" % (dmenu_tags, dmenu_arguments)
+    dmenu_command = "echo \"{}\" | dmenu -p 'Go:' {}".format(dmenu_tags, dmenu_arguments)
     
     try:
         input_list = subprocess.check_output(
@@ -89,7 +88,7 @@ if input_list[0] in available_engines:
     
 else:
     search_engine = fallback_engine
-    search_string = " ".join(input_list)
+    search_string = " ".join(str(input_list))
 
 engine_url = available_engines[search_engine][0]
 search_prefix = available_engines[search_engine][1]
