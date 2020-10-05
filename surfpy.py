@@ -89,6 +89,20 @@ if "--print-only" in sys.argv:
     print_only = True
 
 # "the way of the future"(TM)
+'''
+Main Use Case is for suckless/surf call to custom-built dmenu, as follows:
+------------------------------------------------------------------------------
+/* SETPROP(readprop, setprop, prompt)*/
+#define SETPROP(r, s, p) { \
+        .v = (const char *[]){ "/bin/sh", "-c", \
+             "prop=\"$(printf '%b' \"$(xprop -id $1 $2 " \
+             "| sed \"s/^$2(STRING) = //;s/^\\\"\\(.*\\)\\\"$/\\1/\")\" " \
+  >>>>>      "| ./surfpy.py --dmenu)\" && xprop -id $1 -f $3 8s -set... (etc.)
+             "surf-setprop", winid, r, s, p, NULL \
+        } \
+}
+------------------------------------------------------------------------------
+'''
 if ("--dmenu" in sys.argv) and (len(sys.argv[:2:]) < 3):
     input_list.remove("--dmenu")
     dmenu_tags = ''
