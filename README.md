@@ -25,3 +25,6 @@ Main Use Case is for suckless/surf call to custom-built dmenu, as follows:
 - combined searchbar & addressbar behavior
 - incorporation into surf
     - dwm colorscheme consistency
+
+## Acknowledgements ##
+Forked from https://github.com/ricardo-ayres/surfpy
