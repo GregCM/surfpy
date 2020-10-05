@@ -7,7 +7,7 @@ Configuration is done in the script itself and adding new tags is very easy.<br/
 
 ## "the way of the future"(TM) ##
 
-Main Use Case Motiveation is for suckless/surf call to custom-built dmenu, as follows:
+Main Use Case is for suckless/surf call to custom-built dmenu, as follows:
 
     /* SETPROP(readprop, setprop, prompt)*/
     #define SETPROP(r, s, p) { \
