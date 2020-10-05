@@ -5,7 +5,7 @@ It is similar to surfraw, but with much less features.
 
 Configuration is done in the script itself and adding new tags is very easy.<br/>
 
-# "the way of the future"(TM) # 
+## "the way of the future"(TM) ##
 
 Main Use Case Motiveation is for suckless/surf call to custom-built dmenu, as follows:
 
